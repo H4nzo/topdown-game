@@ -10,16 +10,19 @@ public enum EnemyState
     Idle,
     Patrol,
     Alert,
-    Chase
+    Chase,
+    SoundDetected // New state for sound detection
 }
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class NPCcontroller : MonoBehaviour
+public class NPCController : MonoBehaviour, IHear
 {
+    #region Variables
 
     public EnemyState enemyState;
+    public GameObject fovMesh;
 
-    [SerializeField] private GameObject alertIcon, chaseTargetIcon;
+    public GameObject alertIcon, chaseTargetIcon;
 
     private const string BLENDSTATE = "Speed";
     private NavMeshAgent navMeshAgent;
@@ -36,15 +39,25 @@ public class NPCcontroller : MonoBehaviour
     [SerializeField] private Waypoint currentWaypoint;
     [SerializeField] private int currentWaypointIndex = 0;
 
-    private Transform target; 
+    private Transform target;
     private bool isChasing = false;
     private bool detectPlayer = false;
     [SerializeField] private float patrolSpeed;
     [SerializeField] private float chaseSpeed = 4.1f;
 
     private Vector3 lastKnownPosition;
-    [SerializeField] private float chaseDistanceThreshold = 10f; 
+    [SerializeField] private float chaseDistanceThreshold = 10f;
     private float distanceCovered = 0f;
+
+    public float noiseResponseDistance = 10f;
+
+    public AudioSource deathClip;
+
+    public bool heardSomething = false;
+    public bool isDead;
+
+
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -65,84 +78,96 @@ public class NPCcontroller : MonoBehaviour
             Debug.LogError("No waypoints assigned to NPCController script on " + gameObject.name);
         }
 
-       
+
     }
 
     // Update is called once per frame
     void Update()
     {
 
-
-        if (!isIdling && !currentWaypoint.IsOccupied())
+        // Check if the NPC is in the SoundDetected state
+        if (enemyState != EnemyState.SoundDetected)
         {
-            currentWaypoint.Occupy(gameObject);
-        }
-        else if (!isIdling && currentWaypoint.IsOccupied() && currentWaypoint.GetVisitingNPC() != gameObject)
-        {
-            // Find another unoccupied waypoint
-            FindUnoccupiedWaypoint();
-        }
-
-        if (navMeshAgent.enabled && !navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
-        {
-            if (!isIdling)
+            #region Locomotion
+            if (!isIdling && !currentWaypoint.IsOccupied())
             {
-                animator.SetFloat(BLENDSTATE, 0f);
-                isIdling = true;
-                idleTimer = 0f;
+                currentWaypoint.Occupy(gameObject);
             }
-            else
+            else if (!isIdling && currentWaypoint.IsOccupied() && currentWaypoint.GetVisitingNPC() != gameObject)
             {
-                idleTimer += Time.deltaTime;
-                if (idleTimer >= currentWaypoint.idleDuration)
+                // Find another unoccupied waypoint
+                FindUnoccupiedWaypoint();
+            }
+
+            if (navMeshAgent.enabled && !navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+            {
+                if (!isIdling)
                 {
-                    isIdling = false;
-                    // Release the current waypoint
-                    currentWaypoint.Release();
-                    SetNextWaypointIndex();
-                    SelectedState();
+                    animator.SetFloat(BLENDSTATE, 0f);
+                    isIdling = true;
+                    idleTimer = 0f;
+                }
+                else
+                {
+                    idleTimer += Time.deltaTime;
+                    if (idleTimer >= currentWaypoint.idleDuration)
+                    {
+                        isIdling = false;
+                        // Release the current waypoint
+                        currentWaypoint.Release();
+                        SetNextWaypointIndex();
+                        SelectedState();
+                    }
+                }
+            }
+            #endregion
+
+            // Check for player detection and initiate alerting if detected
+            if (detectPlayer && !isChasing && enemyState != EnemyState.Alert)
+            {
+                StartAlerting();
+            }
+
+            // Handle alerting behavior
+            if (isAlerting)
+            {
+                alertTimer += Time.deltaTime;
+                if (alertTimer >= alertDuration)
+                {
+                    alertTimer = 0f;
+                    isAlerting = false;
+                    StartChasing();
                 }
             }
         }
 
-
-
-        if (detectPlayer && !isChasing && enemyState != EnemyState.Alert)
+        // Only execute chasing behavior if not in SoundDetected state
+        if (enemyState != EnemyState.SoundDetected)
         {
-            StartAlerting();
-        }
-
-        if (isAlerting)
-        {
-            alertTimer += Time.deltaTime;
-            if (alertTimer >= alertDuration)
+            if (isChasing)
             {
-                alertTimer = 0f;
-                isAlerting = false;
-                StartChasing();
+                ChaseTarget();
+                // Calculate distance covered during chase
+                distanceCovered += navMeshAgent.velocity.magnitude * Time.deltaTime;
+                // Check if the NPC should return to patrol state
+                if (distanceCovered >= chaseDistanceThreshold)
+                {
+                    distanceCovered = 0;
+                    ReturnToPatrol();
+                }
             }
         }
-
-        if (isChasing)
-        {
-            ChaseTarget();
-            // Calculate distance covered during chase
-            distanceCovered += navMeshAgent.velocity.magnitude * Time.deltaTime;
-            // Check if the NPC should return to patrol state
-            if (distanceCovered >= chaseDistanceThreshold)
-            {
-                distanceCovered = 0;
-                ReturnToPatrol();
-            }
-        }
-
     }
+
 
     void ReturnToPatrol()
     {
+
         enemyState = EnemyState.Patrol;
         isChasing = false;
 
+
+        alertIcon.SetActive(false);
         chaseTargetIcon.SetActive(false);
 
         navMeshAgent.speed = patrolSpeed;
@@ -158,9 +183,9 @@ public class NPCcontroller : MonoBehaviour
 
         // Set the current waypoint to the previous waypoint
         currentWaypointIndex = previousWaypointIndex;
+        SetNextWaypointIndex();
         PatrolToDestination();
     }
-
 
     void StartAlerting()
     {
@@ -176,22 +201,19 @@ public class NPCcontroller : MonoBehaviour
     {
         enemyState = EnemyState.Chase;
         isChasing = true;
-      
+
         Debug.Log("Chasing");
     }
 
     void ChaseTarget()
     {
-        if (target != null)
-        {
-            navMeshAgent.SetDestination(target.position);
-            navMeshAgent.isStopped = false;
+        navMeshAgent.SetDestination(target.position);
+        navMeshAgent.isStopped = false;
 
-            alertIcon.SetActive(false);
-            chaseTargetIcon.SetActive(true);
-            navMeshAgent.speed = chaseSpeed;
-            animator.SetFloat(BLENDSTATE, 1f);
-        }
+        alertIcon.SetActive(false);
+        chaseTargetIcon.SetActive(true);
+        navMeshAgent.speed = chaseSpeed;
+        animator.SetFloat(BLENDSTATE, 1f);
     }
 
     private void SelectedState()
@@ -213,9 +235,12 @@ public class NPCcontroller : MonoBehaviour
 
     public void PatrolToDestination()
     {
+
         currentWaypoint = waypoints[currentWaypointIndex];
         navMeshAgent.SetDestination(currentWaypoint.transform.position);
+        navMeshAgent.speed = patrolSpeed;
         animator.SetFloat(BLENDSTATE, .5f);
+
     }
 
     void FindUnoccupiedWaypoint()
@@ -237,12 +262,81 @@ public class NPCcontroller : MonoBehaviour
         detectPlayer = _detectPlayer;
         if (detectPlayer)
         {
-            Debug.Log("Detected Player");
+            Debug.Log(name + " Detected Player");
         }
         else
         {
-            Debug.Log(gameObject.name + " did not Detect Player");
+            //Debug.Log(gameObject.name + " did not Detect Player");
         }
     }
+
+    // Implement RespondToSound method from IHear interface
+    public void RespondToSound(Sound sound)
+    {
+
+        // Check if the NPC is currently being attacked
+        if (sound.soundType == Sound.SoundType.Interesting)
+        {
+            Debug.Log(name + " has detected sound");
+            heardSomething = true;
+            enemyState = EnemyState.SoundDetected; // Switch to SoundDetected state
+            Debug.Log("Switched to Sound Detection state");
+            // Reset waypoint and state if currently idling
+
+            MoveToSound(sound.pos);
+        }
+    }
+
+    private Coroutine moveToSoundCoroutine;
+
+    private void MoveToSound(Vector3 _pos)
+    {
+        if (isDead == true)
+        {
+            navMeshAgent.isStopped = false;
+            alertIcon.SetActive(false);
+            chaseTargetIcon.SetActive(false);
+            navMeshAgent.SetDestination(_pos); // Set the destination to the position of the sound
+            navMeshAgent.speed = chaseSpeed;
+            animator.SetFloat(BLENDSTATE, 1f);
+
+            // Start a coroutine to monitor if the NPC has reached the sound position
+            moveToSoundCoroutine = StartCoroutine(MonitorSoundPosition(_pos));
+        }
+        else
+        {
+            navMeshAgent.isStopped = false;
+            alertIcon.SetActive(true);
+            chaseTargetIcon.SetActive(false);
+            navMeshAgent.SetDestination(_pos); // Set the destination to the position of the sound
+            navMeshAgent.speed = chaseSpeed;
+            animator.SetFloat(BLENDSTATE, 1f);
+
+            // Start a coroutine to monitor if the NPC has reached the sound position
+            moveToSoundCoroutine = StartCoroutine(MonitorSoundPosition(_pos));
+        }
+
+    }
+
+    private IEnumerator MonitorSoundPosition(Vector3 soundPosition)
+    {
+        while (Vector3.Distance(transform.position, soundPosition) > navMeshAgent.stoppingDistance)
+        {
+            yield return null;
+        }
+
+        // NPC has reached the sound position
+
+        animator.SetFloat(BLENDSTATE, 0f); // Switch the animator state to idle
+        moveToSoundCoroutine = null;
+
+        // Wait for a while before returning to patrol
+        yield return new WaitForSeconds(100f); // Adjust this time as needed
+        alertIcon.SetActive(false);
+        ReturnToPatrol();
+    }
+
+
+
 
 }

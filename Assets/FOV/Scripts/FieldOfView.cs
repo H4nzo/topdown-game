@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
-    [SerializeField] private NPCcontroller npc;
+    [SerializeField] private NPCController npc;
     private bool detectPlayer = false;
 
 
@@ -32,7 +32,7 @@ public class FieldOfView : MonoBehaviour
 
     private void Awake()
     {
-        npc = GetComponent<NPCcontroller>();
+        npc = GetComponent<NPCController>();
     }
 
     private void Start()
@@ -241,6 +241,7 @@ public class FieldOfView : MonoBehaviour
         MeshRenderer meshRenderer = fovMesh.GetComponent<MeshRenderer>();
         if (meshRenderer != null)
         {
+            color.a = 0.1f;
             meshRenderer.material.color = color;
         }
     }
