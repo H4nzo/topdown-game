@@ -10,7 +10,7 @@ public class TriggerSound : MonoBehaviour
     [SerializeField] private float soundRange = 25f;
 
     [SerializeField] private Sound.SoundType soundType = Sound.SoundType.Danger;
-    public GameObject alertIcon;
+   
 
   
 

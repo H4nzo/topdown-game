@@ -5,13 +5,15 @@ using UnityEngine.AI;
 using UnityEditor;
 using System.Linq;
 
+//FINITE STATE MACHINE
 public enum EnemyState
 {
     Idle,
     Patrol,
     Alert,
     Chase,
-    SoundDetected // New state for sound detection
+    SoundDetected,
+    ShootAtSight
 }
 
 [RequireComponent(typeof(NavMeshAgent))]
@@ -22,7 +24,7 @@ public class NPCController : MonoBehaviour, IHear
     public EnemyState enemyState;
     public GameObject fovMesh;
 
-    public GameObject alertIcon, chaseTargetIcon;
+    public GameObject alertIcon, chaseTargetIcon, soundIcon;
 
     private const string BLENDSTATE = "Speed";
     private NavMeshAgent navMeshAgent;
@@ -32,7 +34,7 @@ public class NPCController : MonoBehaviour, IHear
     private bool isIdling = false;
 
     [SerializeField] private float alertDuration = 3f; // Adjust as needed
-    private float alertTimer = 0f;
+    [SerializeField]private float alertTimer = 0f;
     [SerializeField] private bool isAlerting = false;
 
     public Waypoint[] waypoints;
@@ -51,17 +53,21 @@ public class NPCController : MonoBehaviour, IHear
 
     public float noiseResponseDistance = 10f;
 
-    public AudioSource deathClip;
-
     public bool heardSomething = false;
     public bool isDead;
 
 
     #endregion
 
+
+    public bool isFiring = false;
+    private Weapon weapon;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        weapon = GetComponent<Weapon>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         patrolSpeed = navMeshAgent.speed;
@@ -88,7 +94,7 @@ public class NPCController : MonoBehaviour, IHear
         // Check if the NPC is in the SoundDetected state
         if (enemyState != EnemyState.SoundDetected)
         {
-            #region Locomotion
+           #region Locomotion
             if (!isIdling && !currentWaypoint.IsOccupied())
             {
                 currentWaypoint.Occupy(gameObject);
@@ -120,10 +126,10 @@ public class NPCController : MonoBehaviour, IHear
                     }
                 }
             }
-            #endregion
+           #endregion
 
             // Check for player detection and initiate alerting if detected
-            if (detectPlayer && !isChasing && enemyState != EnemyState.Alert)
+            if (detectPlayer && !isChasing && enemyState != EnemyState.Alert && enemyState != EnemyState.ShootAtSight)
             {
                 StartAlerting();
             }
@@ -136,8 +142,17 @@ public class NPCController : MonoBehaviour, IHear
                 {
                     alertTimer = 0f;
                     isAlerting = false;
-                    StartChasing();
+                    isFiring = true;
+                    // StartChasing();
+                    
                 }
+            }
+
+            if(isFiring == true)
+            {
+                alertTimer = 0f;
+                isAlerting = false;
+                ShootAtTarget();
             }
         }
 
@@ -155,6 +170,12 @@ public class NPCController : MonoBehaviour, IHear
                     distanceCovered = 0;
                     ReturnToPatrol();
                 }
+            }
+            else if(isFiring && Vector3.Distance(transform.position, target.position) > noiseResponseDistance)
+            {
+                isFiring = false;
+                weapon.StopShooting();
+                StartChasing();
             }
         }
     }
@@ -213,7 +234,7 @@ public class NPCController : MonoBehaviour, IHear
         alertIcon.SetActive(false);
         chaseTargetIcon.SetActive(true);
         navMeshAgent.speed = chaseSpeed;
-        animator.SetFloat(BLENDSTATE, 1f);
+        animator.SetFloat(BLENDSTATE, 0.67f);
     }
 
     private void SelectedState()
@@ -239,7 +260,7 @@ public class NPCController : MonoBehaviour, IHear
         currentWaypoint = waypoints[currentWaypointIndex];
         navMeshAgent.SetDestination(currentWaypoint.transform.position);
         navMeshAgent.speed = patrolSpeed;
-        animator.SetFloat(BLENDSTATE, .5f);
+        animator.SetFloat(BLENDSTATE, .34f);
 
     }
 
@@ -270,6 +291,14 @@ public class NPCController : MonoBehaviour, IHear
         }
     }
 
+    
+    void ShootAtTarget(){
+        enemyState = EnemyState.ShootAtSight;
+        animator.SetFloat(BLENDSTATE, 1f);
+       weapon.Shoot(target);
+        weapon.AlignWithEnemy(target);
+
+    }
     // Implement RespondToSound method from IHear interface
     public void RespondToSound(Sound sound)
     {
@@ -298,7 +327,7 @@ public class NPCController : MonoBehaviour, IHear
             chaseTargetIcon.SetActive(false);
             navMeshAgent.SetDestination(_pos); // Set the destination to the position of the sound
             navMeshAgent.speed = chaseSpeed;
-            animator.SetFloat(BLENDSTATE, 1f);
+            animator.SetFloat(BLENDSTATE, 0.67f);
 
             // Start a coroutine to monitor if the NPC has reached the sound position
             moveToSoundCoroutine = StartCoroutine(MonitorSoundPosition(_pos));
@@ -310,7 +339,7 @@ public class NPCController : MonoBehaviour, IHear
             chaseTargetIcon.SetActive(false);
             navMeshAgent.SetDestination(_pos); // Set the destination to the position of the sound
             navMeshAgent.speed = chaseSpeed;
-            animator.SetFloat(BLENDSTATE, 1f);
+            animator.SetFloat(BLENDSTATE, 0.67f);
 
             // Start a coroutine to monitor if the NPC has reached the sound position
             moveToSoundCoroutine = StartCoroutine(MonitorSoundPosition(_pos));
@@ -331,7 +360,7 @@ public class NPCController : MonoBehaviour, IHear
         moveToSoundCoroutine = null;
 
         // Wait for a while before returning to patrol
-        yield return new WaitForSeconds(100f); // Adjust this time as needed
+        yield return new WaitForSeconds(10f); // Adjust this time as needed
         alertIcon.SetActive(false);
         ReturnToPatrol();
     }
