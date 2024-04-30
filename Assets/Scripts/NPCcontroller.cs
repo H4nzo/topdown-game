@@ -61,7 +61,11 @@ public class NPCController : MonoBehaviour, IHear
 
 
     public bool isFiring = false;
+    public float fireRate = 15f;
+    private float nextTimeToFire = 0f;
     private Weapon weapon;
+
+    public static List<NPCController> allNPCs = new List<NPCController>();
 
 
     // Start is called before the first frame update
@@ -84,8 +88,10 @@ public class NPCController : MonoBehaviour, IHear
             Debug.LogError("No waypoints assigned to NPCController script on " + gameObject.name);
         }
 
+        allNPCs = FindObjectsOfType<NPCController>().Where(npc => npc != this).ToList();
 
-    }
+
+}
 
     // Update is called once per frame
     void Update()
@@ -148,10 +154,11 @@ public class NPCController : MonoBehaviour, IHear
                 }
             }
 
-            if(isFiring == true)
+            if(isFiring == true && Time.time >= nextTimeToFire)
             {
                 alertTimer = 0f;
                 isAlerting = false;
+                nextTimeToFire = Time.time + 1f / fireRate;
                 ShootAtTarget();
             }
         }
@@ -178,12 +185,15 @@ public class NPCController : MonoBehaviour, IHear
                 StartChasing();
             }
         }
+
+
+       
     }
 
 
     void ReturnToPatrol()
     {
-
+        Debug.Log("Returned Patrol by " + name);
         enemyState = EnemyState.Patrol;
         isChasing = false;
 
@@ -297,6 +307,11 @@ public class NPCController : MonoBehaviour, IHear
         animator.SetFloat(BLENDSTATE, 1f);
        weapon.Shoot(target);
         weapon.AlignWithEnemy(target);
+        if(target.GetComponent<PlayerHealth>().isDead == true)
+        {
+            target.gameObject.layer = LayerMask.NameToLayer("Default");
+            weapon.StopShooting();
+        }
 
     }
     // Implement RespondToSound method from IHear interface
@@ -313,10 +328,26 @@ public class NPCController : MonoBehaviour, IHear
             // Reset waypoint and state if currently idling
 
             MoveToSound(sound.pos);
+
         }
+           
     }
 
     private Coroutine moveToSoundCoroutine;
+
+    private void AssignPatrolStateToOthers()
+    {
+        foreach (NPCController npc in allNPCs)
+        {
+            // Skip the NPC that reached the sound position
+            if (npc == this)
+                continue;
+
+            // Assign patrol state to other NPCs
+            npc.ReturnToPatrol();
+        }
+    }
+
 
     private void MoveToSound(Vector3 _pos)
     {
@@ -330,7 +361,7 @@ public class NPCController : MonoBehaviour, IHear
             animator.SetFloat(BLENDSTATE, 0.67f);
 
             // Start a coroutine to monitor if the NPC has reached the sound position
-            moveToSoundCoroutine = StartCoroutine(MonitorSoundPosition(_pos));
+            //moveToSoundCoroutine = StartCoroutine(MonitorSoundPosition(_pos));
         }
         else
         {
@@ -343,7 +374,10 @@ public class NPCController : MonoBehaviour, IHear
 
             // Start a coroutine to monitor if the NPC has reached the sound position
             moveToSoundCoroutine = StartCoroutine(MonitorSoundPosition(_pos));
-        }
+            // When reaching the sound position, assign patrol state to other NPCs
+            AssignPatrolStateToOthers();
+
+    }
 
     }
 

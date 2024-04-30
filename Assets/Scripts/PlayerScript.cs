@@ -218,6 +218,8 @@ public class PlayerScript : MonoBehaviour
         npc.enabled = false;
         _target.collider.GetComponent<SphereCollider>().enabled = false;
 
+        ScoreSystem scoreSystem = GameObject.FindObjectOfType<ScoreSystem>();
+        scoreSystem.AddScore(1);
 
         if (lineRenderer != null)
             Destroy(lineRenderer);
