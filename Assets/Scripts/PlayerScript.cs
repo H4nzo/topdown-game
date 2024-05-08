@@ -209,6 +209,7 @@ public class PlayerScript : MonoBehaviour
         isFollowingEnemy = false;
 
         //agent.ResetPath();
+        npc.minimapIcon.color = npc.deathColor;
         npc.isDead = true;
         npc.GetComponent<TriggerSound>().PlaySound();
         

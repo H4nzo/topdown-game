@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using UnityEditor;
 using System.Linq;
 
@@ -24,8 +25,17 @@ public class NPCController : MonoBehaviour, IHear
     public EnemyState enemyState;
     public GameObject fovMesh;
 
+    [Header("Minimap Features")]
+    public SpriteRenderer minimapIcon;
+    public Color minimapCurrentColor;
+    public Color aliveColor;
+    public Color alertColor;
+    public Color deathColor;
+
+    [Header("Icon Features")]
     public GameObject alertIcon, chaseTargetIcon, soundIcon;
 
+    [Header("Animation Features")]
     private const string BLENDSTATE = "Speed";
     private NavMeshAgent navMeshAgent;
     private Animator animator;
@@ -34,13 +44,14 @@ public class NPCController : MonoBehaviour, IHear
     private bool isIdling = false;
 
     [SerializeField] private float alertDuration = 3f; // Adjust as needed
-    [SerializeField]private float alertTimer = 0f;
+    [SerializeField] private float alertTimer = 0f;
     [SerializeField] private bool isAlerting = false;
 
     public Waypoint[] waypoints;
     [SerializeField] private Waypoint currentWaypoint;
     [SerializeField] private int currentWaypointIndex = 0;
 
+    [Header("Alert / Detection Features")]
     private Transform target;
     private bool isChasing = false;
     private bool detectPlayer = false;
@@ -71,6 +82,10 @@ public class NPCController : MonoBehaviour, IHear
     // Start is called before the first frame update
     void Start()
     {
+        minimapCurrentColor = minimapIcon.color;
+
+        minimapIcon.color = aliveColor;
+
         weapon = GetComponent<Weapon>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
@@ -91,7 +106,7 @@ public class NPCController : MonoBehaviour, IHear
         allNPCs = FindObjectsOfType<NPCController>().Where(npc => npc != this).ToList();
 
 
-}
+    }
 
     // Update is called once per frame
     void Update()
@@ -100,7 +115,7 @@ public class NPCController : MonoBehaviour, IHear
         // Check if the NPC is in the SoundDetected state
         if (enemyState != EnemyState.SoundDetected)
         {
-           #region Locomotion
+            #region Locomotion
             if (!isIdling && !currentWaypoint.IsOccupied())
             {
                 currentWaypoint.Occupy(gameObject);
@@ -132,7 +147,7 @@ public class NPCController : MonoBehaviour, IHear
                     }
                 }
             }
-           #endregion
+            #endregion
 
             // Check for player detection and initiate alerting if detected
             if (detectPlayer && !isChasing && enemyState != EnemyState.Alert && enemyState != EnemyState.ShootAtSight)
@@ -150,11 +165,11 @@ public class NPCController : MonoBehaviour, IHear
                     isAlerting = false;
                     isFiring = true;
                     // StartChasing();
-                    
+
                 }
             }
 
-            if(isFiring == true && Time.time >= nextTimeToFire)
+            if (isFiring == true && Time.time >= nextTimeToFire)
             {
                 alertTimer = 0f;
                 isAlerting = false;
@@ -178,7 +193,7 @@ public class NPCController : MonoBehaviour, IHear
                     ReturnToPatrol();
                 }
             }
-            else if(isFiring && Vector3.Distance(transform.position, target.position) > noiseResponseDistance)
+            else if (isFiring && Vector3.Distance(transform.position, target.position) > noiseResponseDistance)
             {
                 isFiring = false;
                 weapon.StopShooting();
@@ -187,12 +202,16 @@ public class NPCController : MonoBehaviour, IHear
         }
 
 
-       
+
     }
 
 
     void ReturnToPatrol()
     {
+        minimapIcon.color = aliveColor;
+
+        minimapCurrentColor = minimapIcon.color;
+
         Debug.Log("Returned Patrol by " + name);
         enemyState = EnemyState.Patrol;
         isChasing = false;
@@ -220,6 +239,10 @@ public class NPCController : MonoBehaviour, IHear
 
     void StartAlerting()
     {
+        minimapIcon.color = alertColor;
+        minimapCurrentColor = minimapIcon.color;
+
+
         enemyState = EnemyState.Alert;
         isAlerting = true;
         animator.SetFloat(BLENDSTATE, 0f);
@@ -230,6 +253,9 @@ public class NPCController : MonoBehaviour, IHear
 
     void StartChasing()
     {
+        minimapIcon.color = alertColor;
+        minimapCurrentColor = minimapIcon.color;
+
         enemyState = EnemyState.Chase;
         isChasing = true;
 
@@ -238,6 +264,9 @@ public class NPCController : MonoBehaviour, IHear
 
     void ChaseTarget()
     {
+        minimapIcon.color = alertColor;
+        minimapCurrentColor = minimapIcon.color;
+        
         navMeshAgent.SetDestination(target.position);
         navMeshAgent.isStopped = false;
 
@@ -294,6 +323,9 @@ public class NPCController : MonoBehaviour, IHear
         if (detectPlayer)
         {
             Debug.Log(name + " Detected Player");
+            //minimapIcon.color = alertColor;
+
+            minimapCurrentColor = minimapIcon.color;
         }
         else
         {
@@ -301,13 +333,14 @@ public class NPCController : MonoBehaviour, IHear
         }
     }
 
-    
-    void ShootAtTarget(){
+
+    void ShootAtTarget()
+    {
         enemyState = EnemyState.ShootAtSight;
         animator.SetFloat(BLENDSTATE, 1f);
-       weapon.Shoot(target);
+        weapon.Shoot(target);
         weapon.AlignWithEnemy(target);
-        if(target.GetComponent<PlayerHealth>().isDead == true)
+        if (target.GetComponent<PlayerHealth>().isDead == true)
         {
             target.gameObject.layer = LayerMask.NameToLayer("Default");
             weapon.StopShooting();
@@ -330,7 +363,7 @@ public class NPCController : MonoBehaviour, IHear
             MoveToSound(sound.pos);
 
         }
-           
+
     }
 
     private Coroutine moveToSoundCoroutine;
@@ -353,6 +386,9 @@ public class NPCController : MonoBehaviour, IHear
     {
         if (isDead == true)
         {
+            minimapIcon.color = deathColor;
+            minimapCurrentColor = minimapIcon.color;
+
             navMeshAgent.isStopped = false;
             alertIcon.SetActive(false);
             chaseTargetIcon.SetActive(false);
@@ -365,6 +401,9 @@ public class NPCController : MonoBehaviour, IHear
         }
         else
         {
+            minimapIcon.color = alertColor;
+            minimapCurrentColor = minimapIcon.color;
+
             navMeshAgent.isStopped = false;
             alertIcon.SetActive(true);
             chaseTargetIcon.SetActive(false);
@@ -377,7 +416,7 @@ public class NPCController : MonoBehaviour, IHear
             // When reaching the sound position, assign patrol state to other NPCs
             AssignPatrolStateToOthers();
 
-    }
+        }
 
     }
 
