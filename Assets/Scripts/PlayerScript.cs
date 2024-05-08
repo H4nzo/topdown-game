@@ -202,21 +202,22 @@ public class PlayerScript : MonoBehaviour
         //animator.SetFloat(BLEND, 0f);
 
         NPCController npc = _target.collider.GetComponent<NPCController>();
-
+        npc.isDead = true;
+        npc.minimapIcon.color = npc.deathColor;
         agent.speed = defaultSpeed;
         animator.SetBool(STAB, false);
         
         isFollowingEnemy = false;
 
         //agent.ResetPath();
-        npc.minimapIcon.color = npc.deathColor;
-        npc.isDead = true;
+       
+        
         npc.GetComponent<TriggerSound>().PlaySound();
         
         _target.collider.GetComponent<Animator>().Play("Death");
         _target.collider.GetComponent<NavMeshAgent>().enabled = false;
         npc.fovMesh.SetActive(false);
-        npc.enabled = false;
+        npc._DisableScript();
         _target.collider.GetComponent<SphereCollider>().enabled = false;
 
         ScoreSystem scoreSystem = GameObject.FindObjectOfType<ScoreSystem>();

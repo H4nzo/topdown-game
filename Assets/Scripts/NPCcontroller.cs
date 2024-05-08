@@ -27,7 +27,6 @@ public class NPCController : MonoBehaviour, IHear
 
     [Header("Minimap Features")]
     public SpriteRenderer minimapIcon;
-    public Color minimapCurrentColor;
     public Color aliveColor;
     public Color alertColor;
     public Color deathColor;
@@ -82,9 +81,8 @@ public class NPCController : MonoBehaviour, IHear
     // Start is called before the first frame update
     void Start()
     {
-        minimapCurrentColor = minimapIcon.color;
-
         minimapIcon.color = aliveColor;
+
 
         weapon = GetComponent<Weapon>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -176,6 +174,31 @@ public class NPCController : MonoBehaviour, IHear
                 nextTimeToFire = Time.time + 1f / fireRate;
                 ShootAtTarget();
             }
+
+            if (enemyState == EnemyState.Chase)
+            {
+                ChaseTarget();
+
+                // Check if the player is still within sight during the Chase state
+                if (CanSeePlayer())
+                {
+                    // If the player is still within sight, switch to shooting
+                    SwitchToShooting();
+                }
+                else
+                {
+                    // If the player is not within sight, continue chasing
+                    // Calculate distance covered during chase
+                    distanceCovered += navMeshAgent.velocity.magnitude * Time.deltaTime;
+
+                    // Check if the NPC should return to patrol state
+                    if (distanceCovered >= chaseDistanceThreshold)
+                    {
+                        distanceCovered = 0;
+                        ReturnToPatrol();
+                    }
+                }
+            }
         }
 
         // Only execute chasing behavior if not in SoundDetected state
@@ -201,7 +224,15 @@ public class NPCController : MonoBehaviour, IHear
             }
         }
 
-
+        if (isDead.Equals(true))
+        {
+            minimapIcon.color = deathColor;
+            this.tag = "Untagged";
+            if (currentWaypoint != null)
+            {
+                currentWaypoint.Release();
+            }
+        }
 
     }
 
@@ -210,7 +241,7 @@ public class NPCController : MonoBehaviour, IHear
     {
         minimapIcon.color = aliveColor;
 
-        minimapCurrentColor = minimapIcon.color;
+     
 
         Debug.Log("Returned Patrol by " + name);
         enemyState = EnemyState.Patrol;
@@ -240,7 +271,6 @@ public class NPCController : MonoBehaviour, IHear
     void StartAlerting()
     {
         minimapIcon.color = alertColor;
-        minimapCurrentColor = minimapIcon.color;
 
 
         enemyState = EnemyState.Alert;
@@ -254,7 +284,7 @@ public class NPCController : MonoBehaviour, IHear
     void StartChasing()
     {
         minimapIcon.color = alertColor;
-        minimapCurrentColor = minimapIcon.color;
+       
 
         enemyState = EnemyState.Chase;
         isChasing = true;
@@ -265,8 +295,7 @@ public class NPCController : MonoBehaviour, IHear
     void ChaseTarget()
     {
         minimapIcon.color = alertColor;
-        minimapCurrentColor = minimapIcon.color;
-        
+
         navMeshAgent.SetDestination(target.position);
         navMeshAgent.isStopped = false;
 
@@ -305,15 +334,38 @@ public class NPCController : MonoBehaviour, IHear
 
     void FindUnoccupiedWaypoint()
     {
+        // Create a list to store unoccupied waypoints
+        List<int> unoccupiedIndices = new List<int>();
+
+        // Iterate through all waypoints
         for (int i = 0; i < waypoints.Length; i++)
         {
+            // Check if the current waypoint is unoccupied
             if (!waypoints[i].IsOccupied())
             {
-                currentWaypoint.Release();
-                currentWaypointIndex = i;
-                PatrolToDestination();
-                return;
+                // If unoccupied, add its index to the list of unoccupied indices
+                unoccupiedIndices.Add(i);
             }
+        }
+
+        // If there are unoccupied waypoints
+        if (unoccupiedIndices.Count > 0)
+        {
+            // Choose a random unoccupied waypoint from the list
+            int randomIndex = Random.Range(0, unoccupiedIndices.Count);
+            int chosenIndex = unoccupiedIndices[randomIndex];
+
+            // Release the current waypoint
+            currentWaypoint.Release();
+
+            // Set the current waypoint to the chosen unoccupied waypoint
+            currentWaypointIndex = chosenIndex;
+            PatrolToDestination();
+        }
+        else
+        {
+            // If no unoccupied waypoints are found, stay at the current waypoint
+            Debug.LogWarning("No unoccupied waypoints found!");
         }
     }
 
@@ -323,9 +375,7 @@ public class NPCController : MonoBehaviour, IHear
         if (detectPlayer)
         {
             Debug.Log(name + " Detected Player");
-            //minimapIcon.color = alertColor;
 
-            minimapCurrentColor = minimapIcon.color;
         }
         else
         {
@@ -347,23 +397,70 @@ public class NPCController : MonoBehaviour, IHear
         }
 
     }
+
+    bool CanSeePlayer()
+    {
+        // Perform a raycast to check if there are any obstacles between the NPC and the player
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, (target.position - transform.position).normalized, out hit, Mathf.Infinity))
+        {
+            // If the raycast hits the player, return true
+            if (hit.transform.CompareTag("Player"))
+            {
+                return true;
+            }
+        }
+
+        // If the raycast doesn't hit the player, return false
+        return false;
+    }
+
+    void SwitchToShooting()
+    {
+        // Switch the NPC state to shooting
+        enemyState = EnemyState.ShootAtSight;
+        animator.SetFloat(BLENDSTATE, 1f);
+
+        // Start shooting at the player
+        weapon.Shoot(target);
+        weapon.AlignWithEnemy(target);
+
+        // Check if the player is dead to stop shooting
+        if (target.GetComponent<PlayerHealth>().isDead)
+        {
+            target.gameObject.layer = LayerMask.NameToLayer("Default");
+            weapon.StopShooting();
+        }
+        if(enemyState == EnemyState.Patrol)
+        {
+            weapon.StopShooting();
+        }
+    }
+
     // Implement RespondToSound method from IHear interface
     public void RespondToSound(Sound sound)
     {
-
-        // Check if the NPC is currently being attacked
         if (sound.soundType == Sound.SoundType.Interesting)
         {
             Debug.Log(name + " has detected sound");
             heardSomething = true;
-            enemyState = EnemyState.SoundDetected; // Switch to SoundDetected state
+            enemyState = EnemyState.SoundDetected;
             Debug.Log("Switched to Sound Detection state");
-            // Reset waypoint and state if currently idling
 
-            MoveToSound(sound.pos);
-
+            if (CanSeePlayer())
+            {
+                Debug.Log("Can see player");
+                // If the NPC can see the player, start chasing
+                StartChasing();
+            }
+            else
+            {
+                Debug.Log("Can't see player");
+                // If the NPC can't see the player, move towards the sound position
+                MoveToSound(sound.pos);
+            }
         }
-
     }
 
     private Coroutine moveToSoundCoroutine;
@@ -384,40 +481,27 @@ public class NPCController : MonoBehaviour, IHear
 
     private void MoveToSound(Vector3 _pos)
     {
-        if (isDead == true)
+        if (isDead)
         {
             minimapIcon.color = deathColor;
-            minimapCurrentColor = minimapIcon.color;
-
             navMeshAgent.isStopped = false;
             alertIcon.SetActive(false);
             chaseTargetIcon.SetActive(false);
-            navMeshAgent.SetDestination(_pos); // Set the destination to the position of the sound
+            navMeshAgent.SetDestination(_pos);
             navMeshAgent.speed = chaseSpeed;
             animator.SetFloat(BLENDSTATE, 0.67f);
-
-            // Start a coroutine to monitor if the NPC has reached the sound position
-            //moveToSoundCoroutine = StartCoroutine(MonitorSoundPosition(_pos));
         }
         else
         {
             minimapIcon.color = alertColor;
-            minimapCurrentColor = minimapIcon.color;
-
             navMeshAgent.isStopped = false;
             alertIcon.SetActive(true);
             chaseTargetIcon.SetActive(false);
-            navMeshAgent.SetDestination(_pos); // Set the destination to the position of the sound
+            navMeshAgent.SetDestination(_pos);
             navMeshAgent.speed = chaseSpeed;
             animator.SetFloat(BLENDSTATE, 0.67f);
-
-            // Start a coroutine to monitor if the NPC has reached the sound position
-            moveToSoundCoroutine = StartCoroutine(MonitorSoundPosition(_pos));
-            // When reaching the sound position, assign patrol state to other NPCs
-            AssignPatrolStateToOthers();
-
+            StartCoroutine(MonitorSoundPosition(_pos));
         }
-
     }
 
     private IEnumerator MonitorSoundPosition(Vector3 soundPosition)
@@ -428,7 +512,7 @@ public class NPCController : MonoBehaviour, IHear
         }
 
         // NPC has reached the sound position
-
+        AssignPatrolStateToOthers();
         animator.SetFloat(BLENDSTATE, 0f); // Switch the animator state to idle
         moveToSoundCoroutine = null;
 
@@ -439,6 +523,20 @@ public class NPCController : MonoBehaviour, IHear
     }
 
 
+    public void _DisableScript()
+    {
+        StartCoroutine(DisableScript(.9f)); 
+    }
+    IEnumerator DisableScript(float t)
+    {
+        yield return new WaitForSeconds(t);
+        this.enabled = false;
+    }
+
+    public void ReleaseOccupant()
+    {
+        currentWaypoint = null;
+    }
 
 
 }
