@@ -533,10 +533,6 @@ public class NPCController : MonoBehaviour, IHear
         this.enabled = false;
     }
 
-    public void ReleaseOccupant()
-    {
-        currentWaypoint = null;
-    }
 
 
 }
