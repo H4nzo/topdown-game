@@ -224,14 +224,9 @@ public class NPCController : MonoBehaviour, IHear
             }
         }
 
-        if (isDead.Equals(true))
+        if (isDead == true)
         {
-            minimapIcon.color = deathColor;
-            this.tag = "Untagged";
-            if (currentWaypoint != null)
-            {
-                currentWaypoint.Release();
-            }
+            Die();
         }
 
     }
@@ -240,8 +235,7 @@ public class NPCController : MonoBehaviour, IHear
     void ReturnToPatrol()
     {
         minimapIcon.color = aliveColor;
-
-     
+        weapon.StopShooting();
 
         Debug.Log("Returned Patrol by " + name);
         enemyState = EnemyState.Patrol;
@@ -284,7 +278,7 @@ public class NPCController : MonoBehaviour, IHear
     void StartChasing()
     {
         minimapIcon.color = alertColor;
-       
+
 
         enemyState = EnemyState.Chase;
         isChasing = true;
@@ -324,7 +318,8 @@ public class NPCController : MonoBehaviour, IHear
 
     public void PatrolToDestination()
     {
-
+        weapon.StopShooting();
+        
         currentWaypoint = waypoints[currentWaypointIndex];
         navMeshAgent.SetDestination(currentWaypoint.transform.position);
         navMeshAgent.speed = patrolSpeed;
@@ -432,7 +427,7 @@ public class NPCController : MonoBehaviour, IHear
             target.gameObject.layer = LayerMask.NameToLayer("Default");
             weapon.StopShooting();
         }
-        if(enemyState == EnemyState.Patrol)
+        if (enemyState == EnemyState.Patrol)
         {
             weapon.StopShooting();
         }
@@ -483,7 +478,6 @@ public class NPCController : MonoBehaviour, IHear
     {
         if (isDead)
         {
-            minimapIcon.color = deathColor;
             navMeshAgent.isStopped = false;
             alertIcon.SetActive(false);
             chaseTargetIcon.SetActive(false);
@@ -525,14 +519,25 @@ public class NPCController : MonoBehaviour, IHear
 
     public void _DisableScript()
     {
-        StartCoroutine(DisableScript(.9f)); 
+        StartCoroutine(DisableScript(.9f));
     }
     IEnumerator DisableScript(float t)
     {
+
         yield return new WaitForSeconds(t);
         this.enabled = false;
     }
 
+    void Die()
+    {
+        GetComponent<Die>().enabled = true;
+
+        this.tag = "Untagged";
+        if (currentWaypoint != null)
+        {
+            currentWaypoint.Release();
+        }
+    }
 
 
 }

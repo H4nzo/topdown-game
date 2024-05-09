@@ -203,7 +203,7 @@ public class PlayerScript : MonoBehaviour
 
         NPCController npc = _target.collider.GetComponent<NPCController>();
         npc.isDead = true;
-        npc.minimapIcon.color = npc.deathColor;
+        // npc.minimapIcon.color = npc.deathColor;
         agent.speed = defaultSpeed;
         animator.SetBool(STAB, false);
         
