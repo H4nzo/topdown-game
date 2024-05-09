@@ -5,9 +5,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class PlayerScript : MonoBehaviour
 {
-   
     const string BLEND = "Action";
-
     const string STAB = "Stab";
     const string RUN = "Run";
 
@@ -31,27 +29,25 @@ public class PlayerScript : MonoBehaviour
     public float distanceToKill;
 
     bool isFollowingEnemy = false;
+    bool isStabbing = false; // Track if the player is currently stabbing
+    bool isStabbed = false; // Track if the player has initiated the stab animation
+
     public float stabAnimationDuration = 2f;
-
-    private bool isStabbed = false;
-
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-
         defaultSpeed = agent.speed;
     }
 
     void Update()
     {
         // Check for left mouse button or touch input
-        if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
+        if (!isStabbing && !isStabbed && (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)))
         {
             Vector2 inputPosition = Input.GetMouseButtonDown(0) ? Input.mousePosition : Input.GetTouch(0).position;
             ClickToMove(inputPosition);
-
         }
 
         FaceTarget();
@@ -60,23 +56,15 @@ public class PlayerScript : MonoBehaviour
         // Update line renderer while player is moving
         if (agent.velocity != Vector3.zero)
             UpdateLineRenderer();
-
-        //if (isStabbed == false)
-        //    agent.speed = defaultSpeed;
-
-      
     }
-
 
     void ClickToMove(Vector2 inputPosition)
     {
+        // Check if the player is currently stabbing or has already initiated the stab animation, if so, return without executing click-to-move logic
+        if (isStabbing || isStabbed)
+            return;
 
-        if (agent.speed == defaultSpeed)
-        {
-            agent.speed = defaultSpeed;
-        }
-
-       
+        // Rest of the method remains the same
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(inputPosition);
 
@@ -86,7 +74,6 @@ public class PlayerScript : MonoBehaviour
             {
                 if (isFollowingEnemy)
                 {
-                    //StopCoroutine("FollowEnemy");
                     StopAllCoroutines();
                     isFollowingEnemy = false;
                     animator.SetFloat(BLEND, 0f);
@@ -98,14 +85,11 @@ public class PlayerScript : MonoBehaviour
                 {
                     Instantiate(clickEffect, hit.point + new Vector3(0, .1f, 0), clickEffect.transform.rotation);
                     lastPosition = transform.position;
-
-
                 }
 
                 if (lineRenderer != null)
                     Destroy(lineRenderer);
 
-                // Create a new line sprite and set its position to the player
                 lineRenderer = Instantiate(linePrefab, transform.position, Quaternion.identity);
 
                 NavMeshPath path = agent.path;
@@ -117,50 +101,38 @@ public class PlayerScript : MonoBehaviour
             }
             else if (hit.collider.CompareTag("Enemy"))
             {
+                StartCoroutine(FollowEnemy(hit));
+                if (clickEffect != null)
+                {
+                    Instantiate(clickEffect, hit.point + new Vector3(0, .1f, 0), clickEffect.transform.rotation);
+                    lastPosition = transform.position;
+                }
 
-                    StartCoroutine(FollowEnemy(hit));
-                      
-                    if (clickEffect != null)
-                    {
-                        Instantiate(clickEffect, hit.point + new Vector3(0, .1f, 0), clickEffect.transform.rotation);
-                        lastPosition = transform.position;
-                    }
+                if (lineRenderer != null)
+                    Destroy(lineRenderer);
 
-                    // Destroy the previous line sprite if it exists
-                    if (lineRenderer != null)
-                        Destroy(lineRenderer);
-
-                
                 lineRenderer = Instantiate(linePrefab, transform.position, Quaternion.identity);
                 lineRenderer.GetComponent<LineRenderer>().material = deathTrailMaterial;
 
-                   
-                    NavMeshPath path = agent.path;
-                    lineRenderer.GetComponent<LineRenderer>().positionCount = path.corners.Length;
-                    for (int i = 0; i < path.corners.Length; i++)
-                    {
-                        lineRenderer.GetComponent<LineRenderer>().SetPosition(i, path.corners[i]);
-                    }
+                NavMeshPath path = agent.path;
+                lineRenderer.GetComponent<LineRenderer>().positionCount = path.corners.Length;
+                for (int i = 0; i < path.corners.Length; i++)
+                {
+                    lineRenderer.GetComponent<LineRenderer>().SetPosition(i, path.corners[i]);
+                }
             }
-           
         }
-      
-
     }
-
 
     IEnumerator FollowEnemy(RaycastHit enemy)
     {
         isFollowingEnemy = true;
-        // Adjust this value based on your enemy size
 
         while (true)
         {
-            // Set target slightly before enemy position to avoid overshoot
             Vector3 targetPosition = enemy.transform.position - enemy.transform.forward * stoppingDistance;
             agent.SetDestination(targetPosition);
 
-            // Attack enemy when within stopping distance
             float distanceToEnemy = Vector3.Distance(transform.position, targetPosition);
             if (distanceToEnemy <= stoppingDistance && enemy.collider != null)
             {
@@ -183,12 +155,8 @@ public class PlayerScript : MonoBehaviour
             target.collider.GetComponent<NavMeshAgent>().speed = 0;
             animator.SetBool(STAB, true);
             agent.speed = 0;
-            isStabbed = true;
-
-            //agent.velocity = Vector3.zero;
-           
-
-
+            isStabbing = true; // Set stabbing flag to true
+            isStabbed = true; // Set stabbed flag to true when initiating stab animation
 
             StartCoroutine(StopStabAnimation(target));
         }
@@ -196,24 +164,17 @@ public class PlayerScript : MonoBehaviour
 
     IEnumerator StopStabAnimation(RaycastHit _target)
     {
-        
-        
         yield return new WaitForSeconds(stabAnimationDuration);
-        //animator.SetFloat(BLEND, 0f);
 
         NPCController npc = _target.collider.GetComponent<NPCController>();
         npc.isDead = true;
-        // npc.minimapIcon.color = npc.deathColor;
         agent.speed = defaultSpeed;
         animator.SetBool(STAB, false);
-        
         isFollowingEnemy = false;
+        isStabbing = false; // Reset stabbing flag to false
+        isStabbed = false; // Reset stabbed flag to false after stab animation completes
 
-        //agent.ResetPath();
-       
-        
         npc.GetComponent<TriggerSound>().PlaySound();
-        
         _target.collider.GetComponent<Animator>().Play("Death");
         _target.collider.GetComponent<NavMeshAgent>().enabled = false;
         npc.fovMesh.SetActive(false);
@@ -226,13 +187,10 @@ public class PlayerScript : MonoBehaviour
         if (lineRenderer != null)
             Destroy(lineRenderer);
         StopAllCoroutines();
-        
-
     }
 
     void UpdateLineRenderer()
     {
-        // Update the position of the line renderer to follow the player
         if (lineRenderer !=null) {
             NavMeshPath path = agent.path;
             lineRenderer.GetComponent<LineRenderer>().positionCount = path.corners.Length;
@@ -259,18 +217,13 @@ public class PlayerScript : MonoBehaviour
 
     private void SetAnimation()
     {
-        // Play RUN animation
         if (agent.velocity == Vector3.zero)
         {
             animator.SetBool(RUN, false);
-            //animator.SetFloat(BLEND, 0);
-            
         }
         else
         {
-            //animator.SetFloat(BLEND, 0.5f);
             animator.SetBool(RUN, true);
         }
     }
-
 }
