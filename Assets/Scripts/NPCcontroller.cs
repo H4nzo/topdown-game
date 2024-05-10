@@ -569,10 +569,11 @@ public class NPCController : MonoBehaviour, IHear
         GetComponent<Die>().enabled = true;
 
         this.tag = "Untagged";
-        if (currentWaypoint != null)
-        {
-            currentWaypoint.Release();
-        }
+        // Call Waypoint script to release if occupied
+    if (currentWaypoint != null)
+    {
+        currentWaypoint.OnNPCDeath(this);
+    }
     }
 
 

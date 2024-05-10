@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class Waypoint : MonoBehaviour
@@ -19,9 +18,7 @@ public class Waypoint : MonoBehaviour
 
     public bool isOccupied = false;
 
-    [SerializeField]
-    private GameObject visitingNPC;
-
+    [SerializeField] private GameObject visitingNPC;
 
     private void OnDrawGizmos()
     {
@@ -57,6 +54,15 @@ public class Waypoint : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+
+    // Release waypoint when the visiting NPC dies
+    public void OnNPCDeath(MonoBehaviour npc)
+    {
+        if (visitingNPC == npc.gameObject)
+        {
+            Release();
         }
     }
 
