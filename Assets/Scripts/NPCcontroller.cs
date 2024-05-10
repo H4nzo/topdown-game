@@ -32,50 +32,51 @@ public class NPCController : MonoBehaviour, IHear
     public Color deathColor;
 
     [Header("Icon Features")]
-    public GameObject alertIcon, chaseTargetIcon, soundIcon;
+    public GameObject alertIcon;
+    public GameObject chaseTargetIcon;
+    public GameObject soundIcon;
 
     [Header("Animation Features")]
     private const string BLENDSTATE = "Speed";
     private NavMeshAgent navMeshAgent;
     private Animator animator;
 
-    [SerializeField] private float idleTimer = 0f;
+    private float idleTimer = 0f;
     private bool isIdling = false;
 
-    [SerializeField] private float alertDuration = 3f; // Adjust as needed
-    [SerializeField] private float alertTimer = 0f;
-    [SerializeField] private bool isAlerting = false;
+    private float alertDuration = 1f; // Adjust as needed
+    private float alertTimer = 0f;
+    private bool isAlerting = false;
 
     public Waypoint[] waypoints;
-    [SerializeField] private Waypoint currentWaypoint;
-    [SerializeField] private int currentWaypointIndex = 0;
+    private Waypoint currentWaypoint;
+    private int currentWaypointIndex = 0;
 
-    [Header("Alert / Detection Features")]
+    [Tooltip("Alert and Detection Features")]
     private Transform target;
     private bool isChasing = false;
     private bool detectPlayer = false;
-    [SerializeField] private float patrolSpeed;
-    [SerializeField] private float chaseSpeed = 4.1f;
+    private float patrolSpeed;
+    private float chaseSpeed = 4.1f;
 
     private Vector3 lastKnownPosition;
-    [SerializeField] private float chaseDistanceThreshold = 10f;
+    private float chaseDistanceThreshold = 28f;
     private float distanceCovered = 0f;
 
-    public float noiseResponseDistance = 10f;
+    private float noiseResponseDistance = 10f;
 
-    public bool heardSomething = false;
-    public bool isDead;
+    [HideInInspector] public bool heardSomething = false;
+    [HideInInspector] public bool isDead;
 
-
-    #endregion
-
-
-    public bool isFiring = false;
-    public float fireRate = 15f;
+    [HideInInspector] public bool isFiring = false;
+    [HideInInspector] public float fireRate = 15f;
     private float nextTimeToFire = 0f;
     private Weapon weapon;
 
     public static List<NPCController> allNPCs = new List<NPCController>();
+
+    #endregion
+
 
 
     // Start is called before the first frame update
@@ -123,6 +124,7 @@ public class NPCController : MonoBehaviour, IHear
                 // Find another unoccupied waypoint
                 FindUnoccupiedWaypoint();
             }
+
 
             if (navMeshAgent.enabled && !navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
             {
@@ -319,7 +321,7 @@ public class NPCController : MonoBehaviour, IHear
     public void PatrolToDestination()
     {
         weapon.StopShooting();
-        
+
         currentWaypoint = waypoints[currentWaypointIndex];
         navMeshAgent.SetDestination(currentWaypoint.transform.position);
         navMeshAgent.speed = patrolSpeed;
@@ -359,10 +361,31 @@ public class NPCController : MonoBehaviour, IHear
         }
         else
         {
-            // If no unoccupied waypoints are found, stay at the current waypoint
-            Debug.LogWarning("No unoccupied waypoints found!");
+            // If no unoccupied waypoints are found, make the NPC idle for a while
+            StartCoroutine(IdleForSomeTime());
         }
     }
+
+
+
+    IEnumerator IdleForSomeTime()
+    {
+        // Set NPC state to idle
+        isIdling = true;
+
+        // Choose a random duration for idling (you can adjust this as needed)
+        float idleDuration = Random.Range(5f, 10f); // Idle for 5 to 10 seconds
+
+        // Wait for the specified idle duration
+        yield return new WaitForSeconds(idleDuration);
+
+        // Reset idling state
+        isIdling = false;
+
+        // Find another unoccupied waypoint after idling
+        FindUnoccupiedWaypoint();
+    }
+
 
     public void DetectedPlayer(bool _detectPlayer)
     {
@@ -500,12 +523,25 @@ public class NPCController : MonoBehaviour, IHear
 
     private IEnumerator MonitorSoundPosition(Vector3 soundPosition)
     {
+        float startTime = Time.time;
         while (Vector3.Distance(transform.position, soundPosition) > navMeshAgent.stoppingDistance)
         {
             yield return null;
+
+            // Check if it's taking too long to reach the sound position
+            if (Time.time - startTime > 18f)
+            {
+                Debug.Log("Taking too long to reach sound position. Reverting back to patrol.");
+                AssignPatrolStateToOthers();
+                animator.SetFloat(BLENDSTATE, 0f); // Switch the animator state to idle
+                moveToSoundCoroutine = null;
+                alertIcon.SetActive(false);
+                ReturnToPatrol();
+                yield break; // Exit the coroutine
+            }
         }
 
-        // NPC has reached the sound position
+        // NPC has reached the sound position within the allowed time
         AssignPatrolStateToOthers();
         animator.SetFloat(BLENDSTATE, 0f); // Switch the animator state to idle
         moveToSoundCoroutine = null;

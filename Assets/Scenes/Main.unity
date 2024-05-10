@@ -1783,7 +1783,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608460, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: soundRange
-      value: 20
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 2185549515478608463, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -2671,6 +2671,12 @@ Transform:
   m_Father: {fileID: 289494434}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &274272697 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
+    type: 3}
+  m_PrefabInstance: {fileID: 578993044}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &277470451
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6108,7 +6114,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608460, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: soundRange
-      value: 20
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 2185549515478608463, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -8824,6 +8830,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78d90d266eeb2f4408a7045c30c26abe, type: 3}
+--- !u!1 &853709005 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
+    type: 3}
+  m_PrefabInstance: {fileID: 2085921750}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &860870600 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4436756356718442, guid: 8f532b8e69df3ca4c9703ddfbbb7456c,
@@ -8836,6 +8848,20 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 578993044}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &865382885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274272697}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3dfe849157a34513a22982227aaaac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimapIcon: {fileID: 1237124885}
+  deathColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
 --- !u!1001 &868301716
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10142,6 +10168,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21e3216547a3ed14882b42c225f72a3d, type: 3}
+--- !u!1 &993457549 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
+    type: 3}
+  m_PrefabInstance: {fileID: 205065105}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &993457558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993457549}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3dfe849157a34513a22982227aaaac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimapIcon: {fileID: 12886361}
+  deathColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
 --- !u!1 &993535446
 GameObject:
   m_ObjectHideFlags: 0
@@ -10743,6 +10789,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e1dcb2c3cf62ef4ea1ceb9ad4dc3314, type: 3}
+--- !u!1 &1035387682 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
+    type: 3}
+  m_PrefabInstance: {fileID: 1226848962}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1037460195 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4502505935100058, guid: f4ce05fa1d34a1146951203b3f1740ce,
@@ -12653,7 +12705,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608460, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: soundRange
-      value: 20
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 2185549515478608463, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -13095,6 +13147,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1239963513 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
+    type: 3}
+  m_PrefabInstance: {fileID: 1998241067}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1239963522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239963513}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3dfe849157a34513a22982227aaaac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimapIcon: {fileID: 1452383242}
+  deathColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
 --- !u!1001 &1242196983
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14361,6 +14433,20 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2085921750}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1433231322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853709005}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3dfe849157a34513a22982227aaaac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimapIcon: {fileID: 1606505430}
+  deathColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
 --- !u!4 &1440425032 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4933250180035468, guid: b647dad3ba43de042a9f95c9e9c9d688,
@@ -18659,7 +18745,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608460, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: soundRange
-      value: 20
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 2185549515478608463, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -18853,6 +18939,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9658c9a89bc644bb9814ff76b4d21f70, type: 3}
+--- !u!1 &1874461751 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
+    type: 3}
+  m_PrefabInstance: {fileID: 1874212807}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1879750190
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20124,6 +20216,20 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1874212807}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1985473073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874461751}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3dfe849157a34513a22982227aaaac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimapIcon: {fileID: 566683020}
+  deathColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
 --- !u!4 &1987057034 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4546591519879866, guid: 1aa537ed47a47814aa4559ee363894f2,
@@ -20162,7 +20268,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608460, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: soundRange
-      value: 20
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 2185549515478608463, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -20362,6 +20468,20 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1226848962}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2003136292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035387682}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3dfe849157a34513a22982227aaaac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimapIcon: {fileID: 1826015596}
+  deathColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
 --- !u!4 &2003622618 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000012926866678, guid: 2b428f431bec4ad4dbb012a63ee42ad2,
@@ -21093,7 +21213,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608460, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: soundRange
-      value: 20
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 2185549515478608463, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
