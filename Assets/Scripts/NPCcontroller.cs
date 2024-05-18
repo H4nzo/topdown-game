@@ -201,6 +201,14 @@ public class NPCController : MonoBehaviour, IHear
                     }
                 }
             }
+
+
+        }
+
+        if (detectPlayer == true && enemyState == EnemyState.SoundDetected)
+        {
+            // StartChasing();
+            StartAlerting();
         }
 
         // Only execute chasing behavior if not in SoundDetected state
@@ -466,18 +474,18 @@ public class NPCController : MonoBehaviour, IHear
             enemyState = EnemyState.SoundDetected;
             Debug.Log("Switched to Sound Detection state");
 
-            if (CanSeePlayer())
-            {
-                Debug.Log("Can see player");
-                // If the NPC can see the player, start chasing
-                StartChasing();
-            }
-            else
-            {
-                Debug.Log("Can't see player");
-                // If the NPC can't see the player, move towards the sound position
+            // if (detectPlayer.Equalsue))
+            // {
+            //     Debug.Log("Can see player");
+            //     // If the NPC can see the player, start chasing
+            //     StartChasing();
+            // }
+            // else
+            // {
+            //     Debug.Log("Can't see player");
+            //     // If the NPC can't see the player, move towards the sound position
                 MoveToSound(sound.pos);
-            }
+            // }
         }
     }
 
@@ -570,10 +578,10 @@ public class NPCController : MonoBehaviour, IHear
 
         this.tag = "Untagged";
         // Call Waypoint script to release if occupied
-    if (currentWaypoint != null)
-    {
-        currentWaypoint.OnNPCDeath(this);
-    }
+        if (currentWaypoint != null)
+        {
+            currentWaypoint.OnNPCDeath(this);
+        }
     }
 
 

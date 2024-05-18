@@ -17,8 +17,17 @@ public class PlayerHealth : MonoBehaviour
     public Color midHealthColor; // Color for mid health
     public Color depletedHealthColor; // Color for depleted health
 
+    private GameManager gameManager;
+
+    
+
     private void Start()
     {
+      
+        gameManager = FindObjectOfType<GameManager>();
+        gameManager.minimapCanvas.SetActive(true);
+        gameManager.topContainer.SetActive(true);
+
         gameOverUI.SetActive(false);
         healthBar.color = fullHealthColor;
     }
@@ -56,7 +65,7 @@ public class PlayerHealth : MonoBehaviour
             GetComponent<Animator>().SetBool("Death", true);
             StartCoroutine(StartCountdown(timer));
 
-           
+
         }
     }
 
@@ -71,6 +80,8 @@ public class PlayerHealth : MonoBehaviour
             enemy.GetComponent<NavMeshAgent>().enabled = false;
 
         }
+        gameManager.minimapCanvas.SetActive(false);
+        gameManager.topContainer.SetActive(false);
         gameOverUI.SetActive(true);
         healthContainer.SetActive(false);
     }

@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject minimapCanvas;
+    public GameObject topContainer;
+
+    
     private void Start()
     {
         Time.timeScale = 1f;
