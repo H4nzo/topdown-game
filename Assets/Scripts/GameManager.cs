@@ -5,10 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public int missionIndex;
     public GameObject minimapCanvas;
     public GameObject topContainer;
 
-    
+
     private void Start()
     {
         Time.timeScale = 1f;
@@ -22,6 +23,11 @@ public class GameManager : MonoBehaviour
     public void MainMenu()
     {
         SceneManager.LoadScene("Menu");
+    }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(missionIndex);
     }
 
 }

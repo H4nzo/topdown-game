@@ -12,10 +12,15 @@ public class ChopperController : MonoBehaviour
         transform.Translate(0, transform.position.y * takeOffSpeed * Time.deltaTime, 0);
         GetComponent<Animator>().enabled = false;
 
-        if(transform.position.y > 24f){
-            windFX.SetActive(false);
-            gameObject.SetActive(false);
-        }
+        StartCoroutine(DestroyRange(9f));
+    }
+
+    IEnumerator DestroyRange(float d)
+    {
+        yield return new WaitForSeconds(d);
+        windFX.SetActive(false);
+        gameObject.SetActive(false);
+
     }
 
 }

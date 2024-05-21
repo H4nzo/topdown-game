@@ -49,7 +49,7 @@ public class NPCController : MonoBehaviour, IHear
     private bool isAlerting = false;
 
     public Waypoint[] waypoints;
-    private Waypoint currentWaypoint;
+    [SerializeField] private Waypoint currentWaypoint;
     private int currentWaypointIndex = 0;
 
     [Tooltip("Alert and Detection Features")]
@@ -484,7 +484,7 @@ public class NPCController : MonoBehaviour, IHear
             // {
             //     Debug.Log("Can't see player");
             //     // If the NPC can't see the player, move towards the sound position
-                MoveToSound(sound.pos);
+            MoveToSound(sound.pos);
             // }
         }
     }
@@ -537,7 +537,7 @@ public class NPCController : MonoBehaviour, IHear
             yield return null;
 
             // Check if it's taking too long to reach the sound position
-            if (Time.time - startTime > 18f)
+            if (Time.time - startTime > 8f)
             {
                 Debug.Log("Taking too long to reach sound position. Reverting back to patrol.");
                 AssignPatrolStateToOthers();

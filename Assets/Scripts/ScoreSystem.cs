@@ -14,12 +14,18 @@ public class ScoreSystem : MonoBehaviour
 
     public float timer = 1.4f;
 
+    public bool TaskComplete = false;
+
+    public UnityEvent eventTaskHandler;
+
+    public MissionObjective missionObjective;
+
     private void Start()
     {
         missionCompleteUI.SetActive(false);
         GameObject[] enemyList = GameObject.FindGameObjectsWithTag("Enemy");
         totalKills = enemyList.Length;
-      
+
         textScore.text = $"{currentKill}/{totalKills}";
     }
 
@@ -28,17 +34,42 @@ public class ScoreSystem : MonoBehaviour
         currentKill += _kill;
         textScore.text = $"{currentKill}/{totalKills}";
 
-        if(currentKill == totalKills)
+        if (currentKill == totalKills)
         {
+            missionObjective.TaskComplete();
+            // eventTaskHandler?.Invoke();
             //mission complete
-            StartCoroutine(StartCountdown(timer));
+            // StartCoroutine(StartCountdown(timer));
         }
     }
+
+    private void Update()
+    {
+        OnComplete(TaskComplete);
+
+    }
+
+    public void OnComplete(bool task)
+    {
+        TaskComplete = task;
+        
+        if (TaskComplete == true)
+        {
+            eventTaskHandler?.Invoke();
+        }
+
+    }
+  
 
     IEnumerator StartCountdown(float time)
     {
         yield return new WaitForSeconds(time);
         missionCompleteUI.SetActive(true);
 
+    }
+
+    public void OnStart()
+    {
+        StartCoroutine(StartCountdown(timer));
     }
 }
