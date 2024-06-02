@@ -36,6 +36,8 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1;
+        
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         defaultSpeed = agent.speed;

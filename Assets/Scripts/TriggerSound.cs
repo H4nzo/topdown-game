@@ -7,11 +7,14 @@ public class TriggerSound : MonoBehaviour
 
     [SerializeField] private AudioSource source = null;
 
-    [SerializeField] private float soundRange = 25f;
+    public float soundRange = 25f;
+    [HideInInspector]public float soundRangeValue;
 
     [SerializeField] private Sound.SoundType soundType = Sound.SoundType.Danger;
    
-
+    private void Start() {
+        soundRangeValue = soundRange;
+    }
   
 
 

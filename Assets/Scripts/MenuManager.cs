@@ -5,7 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-   public void Play()
+    private void Start()
+    {
+        Time.timeScale = 1.0f;
+    }
+    public void Play()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
@@ -13,5 +17,5 @@ public class MenuManager : MonoBehaviour
     {
         Application.Quit();
     }
- 
+
 }
