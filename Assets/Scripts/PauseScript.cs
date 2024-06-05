@@ -19,6 +19,8 @@ public class PauseScript : MonoBehaviour
 
 
     private bool wasPaused = false;
+    public const string IS_OPEN = "isOpen";
+
     private CinemachineBrain cinemachineBrain;
     private float transitionDuration;
 
@@ -60,7 +62,7 @@ public class PauseScript : MonoBehaviour
         playerScript.enabled = false;
         playerScript.GetComponent<NavMeshAgent>().enabled = false;
 
-        pauseCanvas.SetActive(true);
+        pauseCanvas.GetComponent<Animator>().SetBool(IS_OPEN, true);
         pauseCam.gameObject.SetActive(true);
         playerCamera.gameObject.SetActive(false);
         topContainer.SetActive(false);
@@ -87,6 +89,7 @@ public class PauseScript : MonoBehaviour
         playerScript.enabled = true;
         playerScript.GetComponent<NavMeshAgent>().enabled = true;
 
+        pauseCanvas.GetComponent<Animator>().SetBool(IS_OPEN, false);
         pauseCam.gameObject.SetActive(false);
         playerCamera.gameObject.SetActive(true);
         minimapCanvas.SetActive(true);
@@ -103,7 +106,7 @@ public class PauseScript : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(t);
 
-        pauseCanvas.SetActive(false);
+        // pauseCanvas.SetActive(false);
     }
 
      public void Restart()

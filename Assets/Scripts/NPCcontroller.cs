@@ -39,7 +39,7 @@ public class NPCController : MonoBehaviour, IHear
     [Header("Animation Features")]
     private const string BLENDSTATE = "Speed";
     private NavMeshAgent navMeshAgent;
-    private Animator animator;
+    [HideInInspector] public Animator animator;
 
     private float idleTimer = 0f;
     private bool isIdling = false;
@@ -56,8 +56,8 @@ public class NPCController : MonoBehaviour, IHear
     private Transform target;
     private bool isChasing = false;
     private bool detectPlayer = false;
-    private float patrolSpeed;
-    private float chaseSpeed = 4.1f;
+    [HideInInspector] public float patrolSpeed;
+    [HideInInspector] public float chaseSpeed = 4.1f;
 
     private Vector3 lastKnownPosition;
     private float chaseDistanceThreshold = 28f;
@@ -77,7 +77,10 @@ public class NPCController : MonoBehaviour, IHear
 
     #endregion
 
-
+    [HideInInspector] public float initialPatrolSpeed;
+    [HideInInspector] public float initialChaseSpeed;
+    [HideInInspector] public float initialAcceleration;
+    [HideInInspector] public float initialAnimatorSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -89,6 +92,10 @@ public class NPCController : MonoBehaviour, IHear
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         patrolSpeed = navMeshAgent.speed;
+        initialPatrolSpeed = patrolSpeed;
+        initialChaseSpeed = chaseSpeed;
+        initialAnimatorSpeed = animator.speed;
+        initialAcceleration = navMeshAgent.acceleration;
 
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -474,15 +481,6 @@ public class NPCController : MonoBehaviour, IHear
             enemyState = EnemyState.SoundDetected;
             Debug.Log("Switched to Sound Detection state");
 
-            // if (detectPlayer.Equalsue))
-            // {
-            //     Debug.Log("Can see player");
-            //     // If the NPC can see the player, start chasing
-            //     StartChasing();
-            // }
-            // else
-            // {
-            //     Debug.Log("Can't see player");
             //     // If the NPC can't see the player, move towards the sound position
             MoveToSound(sound.pos);
             // }

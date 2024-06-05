@@ -1,11 +1,13 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class StealthAbility : MonoBehaviour
 {
     public GameObject stealthAura;
+    public AudioSource heartbeatAudio;
     public Image stealthBar;
     public TextMeshProUGUI stealthText;
     public float fillSpeed = 0.5f; // Speed at which the bar fills
@@ -64,7 +66,7 @@ public class StealthAbility : MonoBehaviour
             {
                 ts.soundRange = ts.soundRangeValue;
             }
-
+            heartbeatAudio.Stop();
             currentFill = 0f;
             stealthBar.fillAmount = 0f;
             stealthText.text = "0";
@@ -77,6 +79,9 @@ public class StealthAbility : MonoBehaviour
 
     public void ExecuteAbility()
     {
+       
+        heartbeatAudio.Play();
+
         if (currentFill >= 1f && !isStealthActive)
         {
             triggerSounds = FindObjectsOfType<TriggerSound>();
