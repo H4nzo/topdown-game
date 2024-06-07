@@ -11,6 +11,8 @@ public class RampageAbility : MonoBehaviour
     public AudioSource heartbeatAudio;
     public Image stealthBar;
     public TextMeshProUGUI rampageText;
+    public Button rampageButton;
+
     public float fillSpeed = 0.5f; // Speed at which the bar fills
     public float decreaseFillSpeed = 0.1f;
     private float currentFill = 0f;
@@ -30,6 +32,7 @@ public class RampageAbility : MonoBehaviour
     void Start()
     {
         // Ensure the bar and text start at 0
+        rampageButton.enabled = false;
         stealthBar.fillAmount = 0f;
         rampageText.text = "0";
         StartCoroutine(FillStealthBar());
@@ -48,6 +51,7 @@ public class RampageAbility : MonoBehaviour
         // Ensure bar is fully filled and text is 100 when done
         if (currentFill >= 1f)
         {
+            rampageButton.enabled = true;
             currentFill = 1f;
             stealthBar.fillAmount = 1f;
             rampageText.text = "100";
@@ -87,6 +91,7 @@ public class RampageAbility : MonoBehaviour
 
         if (currentFill >= 1f && !isRampageActive)
         {
+            rampageButton.enabled = false;
             Enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
             isChecked = true;
@@ -95,6 +100,10 @@ public class RampageAbility : MonoBehaviour
             stealthAura.SetActive(true);
             isFilling = false;
             StartCoroutine(DecreaseStealthBar());
+        }
+        else
+        {
+            rampageButton.enabled = false;
         }
     }
 
@@ -133,5 +142,6 @@ public class RampageAbility : MonoBehaviour
         {
             RemoveEnemyEffect();
         }
+
     }
 }

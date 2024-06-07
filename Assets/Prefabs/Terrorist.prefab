@@ -7128,16 +7128,23 @@ MonoBehaviour:
   alertIcon: {fileID: 2185549514119840784}
   chaseTargetIcon: {fileID: 2185549515548625180}
   soundIcon: {fileID: 2185549514389818420}
+  animator: {fileID: 0}
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   currentWaypoint: {fileID: 0}
+  patrolSpeed: 0
+  chaseSpeed: 4.1
   heardSomething: 0
   isDead: 0
   isFiring: 0
   fireRate: 1.3
+  initialPatrolSpeed: 0
+  initialChaseSpeed: 0
+  initialAcceleration: 0
+  initialAnimatorSpeed: 0
 --- !u!114 &2185549515478608499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7323,6 +7330,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minimapIcon: {fileID: 1826015596}
   deathColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  cashCollectible: {fileID: 4313671791320464080, guid: 9d5a64f07c86946b18c80014ab2e463f,
+    type: 3}
 --- !u!1 &2185549515487728145
 GameObject:
   m_ObjectHideFlags: 0

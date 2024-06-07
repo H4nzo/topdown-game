@@ -10,6 +10,8 @@ public class StealthAbility : MonoBehaviour
     public AudioSource heartbeatAudio;
     public Image stealthBar;
     public TextMeshProUGUI stealthText;
+    public Button stealthButton;
+
     public float fillSpeed = 0.5f; // Speed at which the bar fills
     public float decreaseFillSpeed = 0.1f;
     private float currentFill = 0f;
@@ -25,6 +27,7 @@ public class StealthAbility : MonoBehaviour
     void Start()
     {
         // Ensure the bar and text start at 0
+        stealthButton.enabled = false;
         stealthBar.fillAmount = 0f;
         stealthText.text = "0";
         StartCoroutine(FillStealthBar());
@@ -43,6 +46,7 @@ public class StealthAbility : MonoBehaviour
         // Ensure bar is fully filled and text is 100 when done
         if (currentFill >= 1f)
         {
+            stealthButton.enabled = true;
             currentFill = 1f;
             stealthBar.fillAmount = 1f;
             stealthText.text = "100";
@@ -79,11 +83,12 @@ public class StealthAbility : MonoBehaviour
 
     public void ExecuteAbility()
     {
-       
+
         heartbeatAudio.Play();
 
         if (currentFill >= 1f && !isStealthActive)
         {
+            stealthButton.enabled = false;
             triggerSounds = FindObjectsOfType<TriggerSound>();
 
             defaultTriggerSoundValue = triggerSounds[0].soundRangeValue;
