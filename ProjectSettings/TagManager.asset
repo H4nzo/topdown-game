@@ -9,6 +9,7 @@ TagManager:
   - Sound
   - House
   - Clickable
+  - Cash
   layers:
   - Default
   - TransparentFX
