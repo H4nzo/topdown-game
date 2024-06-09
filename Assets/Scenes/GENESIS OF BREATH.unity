@@ -8007,6 +8007,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minimapIcon: {fileID: 1237124885}
   deathColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  cashCollectible: {fileID: 0}
+  tossDistance: 0.5
+  springDuration: 0.5
+  rigidbodyDelay: 2
+  collectible_Option: 0
+  collectible_Option_Type: 0
 --- !u!4 &870789396 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4337734605700630, guid: 28c747cbe8f8504498f9e6d42fa3203d,
@@ -9272,6 +9278,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minimapIcon: {fileID: 12886361}
   deathColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  cashCollectible: {fileID: 0}
+  tossDistance: 0.5
+  springDuration: 0.5
+  rigidbodyDelay: 2
+  collectible_Option: 0
+  collectible_Option_Type: 0
 --- !u!1 &993535446
 GameObject:
   m_ObjectHideFlags: 0
@@ -9815,6 +9827,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 348248304, guid: 66ad2e3c519ef4af1a1e9b674e92b4c4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.9572144
+      objectReference: {fileID: 0}
     - target: {fileID: 8288784076199868254, guid: 66ad2e3c519ef4af1a1e9b674e92b4c4,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -12501,6 +12517,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minimapIcon: {fileID: 1452383242}
   deathColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  cashCollectible: {fileID: 0}
+  tossDistance: 0.5
+  springDuration: 0.5
+  rigidbodyDelay: 2
+  collectible_Option: 0
+  collectible_Option_Type: 0
 --- !u!1001 &1242196983
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13863,6 +13885,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minimapIcon: {fileID: 1606505430}
   deathColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  cashCollectible: {fileID: 0}
+  tossDistance: 0.5
+  springDuration: 0.5
+  rigidbodyDelay: 2
+  collectible_Option: 0
+  collectible_Option_Type: 0
 --- !u!4 &1440425032 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4933250180035468, guid: b647dad3ba43de042a9f95c9e9c9d688,
@@ -19940,6 +19968,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minimapIcon: {fileID: 566683020}
   deathColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  cashCollectible: {fileID: 0}
+  tossDistance: 0.5
+  springDuration: 0.5
+  rigidbodyDelay: 2
+  collectible_Option: 0
+  collectible_Option_Type: 0
 --- !u!4 &1987057034 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4546591519879866, guid: 1aa537ed47a47814aa4559ee363894f2,
@@ -20974,6 +21008,11 @@ PrefabInstance:
       propertyPath: healthContainer
       value: 
       objectReference: {fileID: 734104033}
+    - target: {fileID: 6552765627177438871, guid: b9ed2c8017ea640a38b45b3f5959d5a6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6900022077398324870, guid: b9ed2c8017ea640a38b45b3f5959d5a6,
         type: 3}
       propertyPath: m_Name

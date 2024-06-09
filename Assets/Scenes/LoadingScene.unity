@@ -280,6 +280,11 @@ PrefabInstance:
       propertyPath: m_ReferenceResolution.y
       value: 720
       objectReference: {fileID: 0}
+    - target: {fileID: 586511744367016098, guid: 5c9a9ffc2e2b34e3b838cfd010e27898,
+        type: 3}
+      propertyPath: mainMenu
+      value: Menu
+      objectReference: {fileID: 0}
     - target: {fileID: 586511744367016099, guid: 5c9a9ffc2e2b34e3b838cfd010e27898,
         type: 3}
       propertyPath: m_Pivot.x

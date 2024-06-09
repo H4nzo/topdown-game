@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public int missionIndex;
     public GameObject minimapCanvas;
     public GameObject topContainer;
+    public GameObject missionCompleteCanvas;
 
     
     private void Start()
@@ -28,6 +29,11 @@ public class GameManager : MonoBehaviour
     public void NextLevel()
     {
         SceneManager.LoadScene(missionIndex);
+    }
+
+    public void MissionComplete(){
+
+         missionCompleteCanvas.GetComponent<Animator>().SetBool("isOpen", true);
     }
 
 }

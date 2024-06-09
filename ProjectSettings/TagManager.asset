@@ -10,6 +10,7 @@ TagManager:
   - House
   - Clickable
   - Cash
+  - MedKit
   layers:
   - Default
   - TransparentFX

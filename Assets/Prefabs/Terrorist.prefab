@@ -7332,8 +7332,13 @@ MonoBehaviour:
   deathColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   cashCollectible: {fileID: 4313671791320464080, guid: 9d5a64f07c86946b18c80014ab2e463f,
     type: 3}
-  tossDistance: 0.5
+  medKitCollectible: {fileID: 6125072941767130315, guid: cb4cdd9aec7ce4f84924cbc8970790a8,
+    type: 3}
+  tossDistance: 0.45
+  springDuration: 0.5
+  rigidbodyDelay: 2
   collectible_Option: 0
+  collectible_Option_Type: 0
 --- !u!1 &2185549515487728145
 GameObject:
   m_ObjectHideFlags: 0

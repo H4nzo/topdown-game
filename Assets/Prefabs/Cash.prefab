@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4313671791320464083}
   - component: {fileID: 2614378747311669237}
   - component: {fileID: 227757078750017724}
-  - component: {fileID: -1043393764779251307}
+  - component: {fileID: 4344775760266064592}
   m_Layer: 0
   m_Name: Cash
   m_TagString: Cash
@@ -47,6 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223731ffe66934e31ae123e808765e27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floatingText: {fileID: 4392144828844771083, guid: 115574ba8f03e426a94877c2c75ba3cd,
+    type: 3}
+  OptionType: 1
+  healthAmount: 25
+  cashAmount: 25
+  cashMeshRenderer: {fileID: 2067328997358813550}
+  cashCollider: {fileID: 227757078750017724}
   rotationSpeed: 30
   moveDistance: 1
   moveSpeed: 1
@@ -63,7 +70,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.1722666, y: 0.61129594, z: 0.8895727}
   m_Center: {x: 0.028711021, y: -0.19435203, z: -0.02871111}
---- !u!54 &-1043393764779251307
+--- !u!54 &4344775760266064592
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

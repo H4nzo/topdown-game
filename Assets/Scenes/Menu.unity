@@ -921,6 +921,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2003136292, guid: 9658c9a89bc644bb9814ff76b4d21f70, type: 3}
+      propertyPath: collectible_Option
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2185549515478608463, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: m_RootOrder
@@ -3968,6 +3972,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2003136292, guid: 9658c9a89bc644bb9814ff76b4d21f70, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2003136292, guid: 9658c9a89bc644bb9814ff76b4d21f70, type: 3}
+      propertyPath: collectible_Option
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2185549515478608463, guid: 9658c9a89bc644bb9814ff76b4d21f70,
@@ -7270,6 +7278,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2003136292, guid: 9658c9a89bc644bb9814ff76b4d21f70, type: 3}
+      propertyPath: collectible_Option
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2185549515478608463, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: m_RootOrder
@@ -7463,6 +7475,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2003136292, guid: 9658c9a89bc644bb9814ff76b4d21f70, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2003136292, guid: 9658c9a89bc644bb9814ff76b4d21f70, type: 3}
+      propertyPath: collectible_Option
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2185549515478608463, guid: 9658c9a89bc644bb9814ff76b4d21f70,
@@ -8084,6 +8100,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2003136292, guid: 9658c9a89bc644bb9814ff76b4d21f70, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2003136292, guid: 9658c9a89bc644bb9814ff76b4d21f70, type: 3}
+      propertyPath: collectible_Option
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2185549515478608463, guid: 9658c9a89bc644bb9814ff76b4d21f70,
@@ -20333,6 +20353,8 @@ MonoBehaviour:
   killDistance: 10
   distanceToKill: 0
   stabAnimationDuration: 1
+  _npc: {fileID: 0}
+  stabSfx: {fileID: 0}
 --- !u!195 &1139813042393271548
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -20465,6 +20487,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 1139813042393271550}
   soundRange: 14
+  soundRangeValue: 0
   soundType: 0
 --- !u!114 &1139813042393271552
 MonoBehaviour:

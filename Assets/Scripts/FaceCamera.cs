@@ -18,7 +18,8 @@ public class FaceCamera : MonoBehaviour
             // Calculate the direction from the canvas sprite to the camera
             Vector3 lookDir = mainCamera.transform.position - transform.position;
             // Make the canvas sprite face the camera
-            transform.rotation = Quaternion.LookRotation(lookDir, Vector3.up);
+            // transform.rotation = Quaternion.LookRotation(lookDir, Vector3.up);
+            transform.rotation =Quaternion.LookRotation(lookDir, -Vector3.up);
         }
     }
 }

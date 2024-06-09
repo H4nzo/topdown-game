@@ -19,11 +19,11 @@ public class PlayerHealth : MonoBehaviour
 
     private GameManager gameManager;
 
-    
+
 
     private void Start()
     {
-      
+
         gameManager = FindObjectOfType<GameManager>();
         gameManager.minimapCanvas.SetActive(true);
         gameManager.topContainer.SetActive(true);
@@ -84,5 +84,22 @@ public class PlayerHealth : MonoBehaviour
         gameManager.topContainer.SetActive(false);
         gameOverUI.SetActive(true);
         healthContainer.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (health >= 100f)
+        {
+            health = 100f;
+            healthBar.color = fullHealthColor;
+        }
+        else if (health >= 65f)
+        {
+            healthBar.color = midHealthColor;
+        }
+        else
+        {
+            healthBar.color = depletedHealthColor;
+        }
     }
 }
