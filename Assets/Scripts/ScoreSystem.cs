@@ -7,7 +7,6 @@ using TMPro;
 public class ScoreSystem : MonoBehaviour
 {
     public TextMeshProUGUI textScore;
-    public GameObject missionCompleteUI;
 
     private int currentKill = 0;
     public int totalKills = 4;
@@ -22,7 +21,6 @@ public class ScoreSystem : MonoBehaviour
 
     private void Start()
     {
-        missionCompleteUI.SetActive(false);
         GameObject[] enemyList = GameObject.FindGameObjectsWithTag("Enemy");
         totalKills = enemyList.Length;
 
@@ -64,7 +62,6 @@ public class ScoreSystem : MonoBehaviour
     IEnumerator StartCountdown(float time)
     {
         yield return new WaitForSeconds(time);
-        missionCompleteUI.SetActive(true);
 
     }
 

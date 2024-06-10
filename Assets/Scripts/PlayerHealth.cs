@@ -11,6 +11,8 @@ public class PlayerHealth : MonoBehaviour
     public float timer = 1.4f;
     [HideInInspector] public bool isDead = false;
     public GameObject gameOverUI;
+    public GameObject gameOverCam, playerCam, abilityUI, topContainer;
+
     public GameObject healthContainer;
     public Image healthBar; // Reference to the health bar image component
     public Color fullHealthColor; // Color for full health
@@ -28,7 +30,6 @@ public class PlayerHealth : MonoBehaviour
         gameManager.minimapCanvas.SetActive(true);
         gameManager.topContainer.SetActive(true);
 
-        gameOverUI.SetActive(false);
         healthBar.color = fullHealthColor;
     }
 
@@ -48,7 +49,7 @@ public class PlayerHealth : MonoBehaviour
         {
             healthBar.color = fullHealthColor;
         }
-        else if (health >= 65f)
+        else if (health >= 55f)
         {
             healthBar.color = midHealthColor;
         }
@@ -60,6 +61,8 @@ public class PlayerHealth : MonoBehaviour
         if (health <= 0f)
         {
             isDead = true;
+            topContainer.SetActive(false);
+            abilityUI.SetActive(false);
             GetComponent<PlayerScript>().enabled = false;
             GetComponent<NavMeshAgent>().enabled = false;
             GetComponent<Animator>().SetBool("Death", true);
@@ -82,18 +85,23 @@ public class PlayerHealth : MonoBehaviour
         }
         gameManager.minimapCanvas.SetActive(false);
         gameManager.topContainer.SetActive(false);
-        gameOverUI.SetActive(true);
+        gameOverUI.GetComponent<Animator>().SetBool("isOpen", true);
+        gameOverCam.SetActive(true);
+        playerCam.SetActive(false);
         healthContainer.SetActive(false);
     }
 
     private void Update()
     {
+        float healthPercentage = health / maxHealth;
+        healthBar.fillAmount = healthPercentage;
+
         if (health >= 100f)
         {
             health = 100f;
             healthBar.color = fullHealthColor;
         }
-        else if (health >= 65f)
+        else if (health >= 55f)
         {
             healthBar.color = midHealthColor;
         }

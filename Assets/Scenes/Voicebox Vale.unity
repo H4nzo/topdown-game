@@ -8369,7 +8369,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4749650434468103251, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -9076,7 +9076,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4749650434468103251, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -15105,7 +15105,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 309298783}
-  m_LocalRotation: {x: -0.03532775, y: 0.72125494, z: 0.036886077, w: 0.6907841}
+  m_LocalRotation: {x: -0.03532776, y: 0.7212549, z: 0.036886085, w: 0.69078416}
   m_LocalPosition: {x: 8.33, y: -1.86, z: -79.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -15404,7 +15404,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: -0.03532775, y: 0.72125494, z: 0.036886077, w: 0.6907841}
+  m_LocalRotation: {x: -0.03532776, y: 0.7212549, z: 0.036886085, w: 0.69078416}
   m_LocalPosition: {x: -7.804701, y: 35.18721, z: -30.034271}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -16272,7 +16272,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4749650434468103251, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -28953,7 +28953,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4749650434468103251, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -35527,7 +35527,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4749650434468103251, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -36032,7 +36032,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4749650434468103251, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -39704,7 +39704,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4749650434468103251, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -40943,7 +40943,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9658c9a89bc644bb9814ff76b4d21f70, type: 3}
@@ -47567,7 +47567,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4749650434468103251, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -60189,7 +60189,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4749650434468103251, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -74165,7 +74165,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4749650434468103251, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -77055,7 +77055,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4749650434468103251, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -78233,7 +78233,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4749650434468103251, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -84259,7 +84259,7 @@ PrefabInstance:
     - target: {fileID: 2185549515478608500, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4749650434468103251, guid: 9658c9a89bc644bb9814ff76b4d21f70,
         type: 3}
@@ -87102,11 +87102,6 @@ PrefabInstance:
       propertyPath: gameOverUI
       value: 
       objectReference: {fileID: 202818638579310571}
-    - target: {fileID: 6135915573295599642, guid: b9ed2c8017ea640a38b45b3f5959d5a6,
-        type: 3}
-      propertyPath: gameOverCam
-      value: 
-      objectReference: {fileID: 1003358695}
     - target: {fileID: 6135915573295599642, guid: b9ed2c8017ea640a38b45b3f5959d5a6,
         type: 3}
       propertyPath: topContainer
