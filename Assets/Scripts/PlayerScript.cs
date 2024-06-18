@@ -75,7 +75,7 @@ public class PlayerScript : MonoBehaviour
         agent.angularSpeed = adjustedAngularSpeed;
         float adjustedAcceleration = acceleration / Time.timeScale;
         agent.acceleration = adjustedAcceleration;
-       
+
 
     }
 
@@ -207,7 +207,11 @@ public class PlayerScript : MonoBehaviour
         _target.collider.GetComponent<SphereCollider>().enabled = false;
 
         ScoreSystem scoreSystem = GameObject.FindObjectOfType<ScoreSystem>();
-        scoreSystem.AddScore(1);
+        if (scoreSystem != null)
+        {
+            scoreSystem.AddScore(1);
+        }
+
 
         if (lineRenderer != null)
             Destroy(lineRenderer);
