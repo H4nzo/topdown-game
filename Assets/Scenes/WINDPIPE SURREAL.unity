@@ -5547,6 +5547,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  enterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &52486962
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6198,7 +6201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d4942bda62b44ee686ea7dda28ff49d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missionIndex: 1
+  missionIndex: 4
   minimapCanvas: {fileID: 1907681001}
   topContainer: {fileID: 425871108}
   missionCompleteCanvas: {fileID: 4469232196576601714}
@@ -7164,6 +7167,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  enterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &144136437
 GameObject:
   m_ObjectHideFlags: 0
@@ -8681,6 +8687,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  enterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &227648590
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -14811,6 +14820,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  enterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &294801584
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15105,7 +15117,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 309298783}
-  m_LocalRotation: {x: -0.03532775, y: 0.72125494, z: 0.036886077, w: 0.6907841}
+  m_LocalRotation: {x: -0.03532776, y: 0.7212549, z: 0.036886085, w: 0.69078416}
   m_LocalPosition: {x: 8.33, y: -1.86, z: -79.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -15404,7 +15416,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: -0.03532775, y: 0.72125494, z: 0.036886077, w: 0.6907841}
+  m_LocalRotation: {x: -0.03532776, y: 0.7212549, z: 0.036886085, w: 0.69078416}
   m_LocalPosition: {x: -7.804701, y: 35.18721, z: -30.034271}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -29064,6 +29076,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  enterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &586109313
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -30053,6 +30068,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  enterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &655010918
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -35221,6 +35239,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  enterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &950348425
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -60300,6 +60321,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  enterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &1590753936
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -67533,6 +67557,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  enterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &1775571725
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -75530,6 +75557,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  enterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &1936638412
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -76468,6 +76498,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  enterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1974111149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -77766,6 +77799,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  enterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &2025693100
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -83439,6 +83475,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  enterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &2052083580
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -85274,6 +85313,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  enterTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &2128035488
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -86989,6 +87031,10 @@ PrefabInstance:
       propertyPath: trigger.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2073375530}
+    - target: {fileID: 2011460319, guid: b9ed2c8017ea640a38b45b3f5959d5a6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2011460320, guid: b9ed2c8017ea640a38b45b3f5959d5a6, type: 3}
       propertyPath: trigger.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -86997,6 +87043,34 @@ PrefabInstance:
       propertyPath: trigger.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2073375530}
+    - target: {fileID: 2011460322, guid: b9ed2c8017ea640a38b45b3f5959d5a6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 2011460322, guid: b9ed2c8017ea640a38b45b3f5959d5a6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.269
+      objectReference: {fileID: 0}
+    - target: {fileID: 2011460322, guid: b9ed2c8017ea640a38b45b3f5959d5a6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.901
+      objectReference: {fileID: 0}
+    - target: {fileID: 2011460322, guid: b9ed2c8017ea640a38b45b3f5959d5a6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.13129684
+      objectReference: {fileID: 0}
+    - target: {fileID: 2011460322, guid: b9ed2c8017ea640a38b45b3f5959d5a6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0016287318
+      objectReference: {fileID: 0}
+    - target: {fileID: 2011460322, guid: b9ed2c8017ea640a38b45b3f5959d5a6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.99126554
+      objectReference: {fileID: 0}
+    - target: {fileID: 2011460322, guid: b9ed2c8017ea640a38b45b3f5959d5a6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.012296601
+      objectReference: {fileID: 0}
     - target: {fileID: 1139813042393271555, guid: b9ed2c8017ea640a38b45b3f5959d5a6,
         type: 3}
       propertyPath: stealthBar
