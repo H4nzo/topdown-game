@@ -44,7 +44,7 @@ public class NPCController : MonoBehaviour, IHear
     private float idleTimer = 0f;
     private bool isIdling = false;
 
-    private float alertDuration = 1f; // Adjust as needed
+   [SerializeField] private float alertDuration = 10f; // Adjust as needed
     private float alertTimer = 0f;
     private bool isAlerting = false;
 
@@ -68,8 +68,8 @@ public class NPCController : MonoBehaviour, IHear
     [HideInInspector] public bool heardSomething = false;
     [HideInInspector] public bool isDead;
 
-    [HideInInspector] public bool isFiring = false;
-    [HideInInspector] public float fireRate = 15f;
+    public bool isFiring = false;
+    [HideInInspector] public float fireRate = 60f;
     private float nextTimeToFire = 0f;
     private Weapon weapon;
 

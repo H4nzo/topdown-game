@@ -5272,7 +5272,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c3e9d00686b274ab1985a1bc156f1b15, type: 3}
@@ -26052,7 +26052,7 @@ Transform:
   - {fileID: 1348436995}
   - {fileID: 1798952604}
   m_Father: {fileID: 2077296210}
-  m_RootOrder: 51
+  m_RootOrder: 48
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1758130287 stripped
 Transform:
@@ -33424,10 +33424,10 @@ Transform:
   - {fileID: 1275278864}
   - {fileID: 1308056301}
   - {fileID: 1523942810}
+  - {fileID: 1753714921}
   - {fileID: 1309722886}
   - {fileID: 1406716827}
   - {fileID: 1387416080}
-  - {fileID: 1753714921}
   - {fileID: 1400977077}
   - {fileID: 1443694876}
   - {fileID: 1476502232}
