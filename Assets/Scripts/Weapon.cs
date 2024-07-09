@@ -9,7 +9,7 @@ public class Weapon : MonoBehaviour
 
     public Transform origin;
     public ParticleSystem[] muzzleFlash;
-    public GameObject impactFX;
+    public GameObject impactFX;     
 
     public bool isFiring;
 
