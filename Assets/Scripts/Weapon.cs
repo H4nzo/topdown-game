@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public float damage = 30f;
-    public float range = 100f;
+    public float damage = 18f;
+    public float shootingRange = 12.5f;
 
     public Transform origin;
     public ParticleSystem[] muzzleFlash;
-    public GameObject impactFX;     
+    public GameObject impactFX;
 
     public bool isFiring;
 
@@ -17,10 +17,11 @@ public class Weapon : MonoBehaviour
     {
         // Calculate the direction to the target
         Vector3 direction = target.position - origin.position;
+        float distance = direction.magnitude;
 
         // Draw a line from the weapon's origin to the target's position
         Debug.DrawLine(origin.position, target.position, Color.red, 1.0f);
-
+        Debug.Log("Shooting distance = " + distance);
         // Play the muzzle flash effects
         foreach (var p in muzzleFlash)
         {
@@ -29,7 +30,11 @@ public class Weapon : MonoBehaviour
         }
 
         // Apply damage to the player
-        target.GetComponent<PlayerHealth>().TakeDamage(damage);
+        if (distance <= shootingRange)
+        {
+            target.GetComponent<PlayerHealth>().TakeDamage(damage);
+        }
+
 
         // Create impact effect at the target's position
         GameObject impactGO = Instantiate(impactFX, target.position, Quaternion.LookRotation(direction));

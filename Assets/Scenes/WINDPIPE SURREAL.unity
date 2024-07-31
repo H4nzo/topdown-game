@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: d1385980456cd2044b282d73625457db, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 7ad64b6ed4f8e47479b8be21b3bd7730, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.053387955, g: 0.080971465, b: 0.12326132, a: 1}
+  m_IndirectSpecularColor: {r: 0.008979673, g: 0.009226509, b: 0.04056284, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 17f71186c480447f7be92e8ddac71461, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 4a50dc73b12fa4641bb0c771ed2e1e03, type: 2}
 --- !u!1001 &3684114
 PrefabInstance:
   m_ObjectHideFlags: 0

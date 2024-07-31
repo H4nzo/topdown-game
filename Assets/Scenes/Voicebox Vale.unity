@@ -24922,7 +24922,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1305795837}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Script: {fileID: 11500000, guid: 87470ce72a91345dc9ef6f75f2c9a321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_AgentTypeID: 0
@@ -24931,7 +24931,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 1089
+    m_Bits: 4294967295
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
@@ -24941,7 +24941,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 24eccda41206048abbc93bb52cd5fcd0, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 7f7629195153846198c86b88bd01e3f3, type: 2}
 --- !u!4 &1305795839
 Transform:
   m_ObjectHideFlags: 0

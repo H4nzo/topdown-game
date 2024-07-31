@@ -157,6 +157,13 @@ public class PlayerScript : MonoBehaviour
             float distanceToEnemy = Vector3.Distance(transform.position, targetPosition);
             if (distanceToEnemy <= stoppingDistance && enemy.collider != null)
             {
+                Vector3 directionToEnemy = enemy.transform.position - transform.position;
+
+                directionToEnemy.y = 0;
+
+                Quaternion targetRot = Quaternion.LookRotation(directionToEnemy);
+                transform.rotation = targetRot;
+                
                 AttackEnemy(distanceToEnemy, killDistance, enemy);
             }
 

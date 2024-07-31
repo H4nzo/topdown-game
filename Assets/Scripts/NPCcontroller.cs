@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
-using UnityEditor;
 using System.Linq;
 
 //FINITE STATE MACHINE
@@ -38,13 +37,13 @@ public class NPCController : MonoBehaviour, IHear
 
     [Header("Animation Features")]
     private const string BLENDSTATE = "Speed";
-    private NavMeshAgent navMeshAgent;
+    [SerializeField]private NavMeshAgent navMeshAgent;
     [HideInInspector] public Animator animator;
 
     private float idleTimer = 0f;
     private bool isIdling = false;
 
-   [SerializeField] private float alertDuration = 10f; // Adjust as needed
+    [SerializeField] private float alertDuration = 2.345f; // Adjust as needed
     private float alertTimer = 0f;
     private bool isAlerting = false;
 
